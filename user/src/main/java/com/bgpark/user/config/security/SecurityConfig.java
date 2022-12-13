@@ -1,4 +1,4 @@
-package com.bgpark.user.config;
+package com.bgpark.user.config.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +23,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Slf4j
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
