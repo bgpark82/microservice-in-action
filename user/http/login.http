@@ -1,0 +1,29 @@
+###
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "email": "bgpark82@gmail.com",
+  "password": "1234"
+}
+
+###
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "bgpark82@gmail.com",
+  "password": "1234"
+}
+
+> {%
+client.test("사용자 응답 완료", () => { client.assert(response.headers.valueOf("Authorization").startsWith("Bearer "),"성공") })
+client.global.set("auth_token", response.headers.valueOf("Authorization"));
+%}
+
+
+
+###
+GET http://localhost:8080/user
+Authorization: {{auth_token}}
+
