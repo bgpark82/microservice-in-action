@@ -32,6 +32,8 @@ function Login() {
         <div className="App">
             <button onClick={onKakaoLogin}>카카오 로그인</button>
             <div id="naverIdLogin" />
+            <input placeholder="id"/>
+            <input placeholder="password"/>
         </div>
     );
 }

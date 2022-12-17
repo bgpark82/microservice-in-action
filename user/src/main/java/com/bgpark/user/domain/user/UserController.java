@@ -1,5 +1,6 @@
 package com.bgpark.user.domain.user;
 
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class UserController {
         this.env = env;
     }
 
+    @Timed(value = "users.status", longTask = true)
     @GetMapping()
     public ResponseEntity hello(HttpServletRequest request) {
         log.info("server port={}, server port={}", request.getServerPort(), env.getProperty("local.server.port"));
