@@ -1,27 +1,16 @@
 package com.bgpark.notification.domain.naver.alimtalk;
 
+import com.bgpark.notification.domain.naver.NaverClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
-import com.bgpark.notification.domain.naver.cloud.NaverCloudConstant;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpHeaders;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AlimtalkSender {
 
+    private final NaverClient naverAlimtalkClient;
     private final NaverCloudClient cloudClient;
     private final NaverCloudProperty cloudProperty;
     private final AlimktalkProperty alimktalkProperty;
@@ -43,31 +33,15 @@ public class AlimtalkSender {
         final String secretKey = cloudProperty.getSecretKey();
         final String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
-        send(url, timestamp, accessKey, signature);
+        naverAlimtalkClient.send(url, timestamp, accessKey, signature, createBody());
     }
 
-    private void send(String url, String timestamp, String accessKey, String signature)  {
+    private String createBody() {
         try {
-            CloseableHttpClient client = HttpClientBuilder.create().build();
-            HttpPost request = new HttpPost(url);
-            request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            request.addHeader(NaverCloudConstant.X_NCP_APIGW_TIMESTAMP, timestamp);
-            request.addHeader(NaverCloudConstant.X_NCP_IAM_ACCESS_KEY, accessKey);
-            request.addHeader(NaverCloudConstant.X_NCP_APIGW_SIGNATURE_V2, signature);
-            request.setEntity(new StringEntity(createBody(), StandardCharsets.UTF_8));
-            CloseableHttpResponse response = client.execute(request);
-            log.info("response={}", EntityUtils.toString(response.getEntity()));
-
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_ACCEPTED) {
-                throw new RuntimeException("kakao alimtalk send fail");
-            }
-        } catch (IOException e) {
+            return new ObjectMapper().writeValueAsString(new KakaoAlimtalkRequest());
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String createBody() throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(new KakaoAlimtalkRequest());
     }
 
     @Getter
