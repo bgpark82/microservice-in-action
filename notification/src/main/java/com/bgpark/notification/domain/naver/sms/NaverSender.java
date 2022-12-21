@@ -20,7 +20,7 @@ public class NaverSender {
     private final NaverCloudClient cloudClient;
     private final NaverSmsProperty smsProperty;
 
-    public void send() {
+    public void send(String body) {
         final String timestamp = String.valueOf(Instant.now().toEpochMilli());
         final String signaturePath = smsProperty.getSignaturePath();
         final String url = cloudProperty.getRequestUrl(signaturePath);
@@ -28,26 +28,6 @@ public class NaverSender {
         final String secretKey = cloudProperty.getSecretKey();
         final String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
-        naverSmsClient.send(url, timestamp, accessKey, signature, createBody());
+        naverSmsClient.send(url, timestamp, accessKey, signature, body);
     }
-
-    private String createBody() {
-        return "{\n" +
-                "    \"type\":\"SMS\",\n" +
-                "    \"contentType\":\"COMM\",\n" +
-                "    \"countryCode\":\"82\",\n" +
-                "    \"from\":\"07043046482\",\n" +
-                "    \"subject\":\"title\",\n" +
-                "    \"content\":\"hello\",\n" +
-                "    \"messages\":[\n" +
-                "        {\n" +
-                "            \"to\":\"01045808682\",\n" +
-                "            \"subject\":\"sub title\",\n" +
-                "            \"content\":\"sub content\"\n" +
-                "        }\n" +
-                "    ]\n" +
-                "}";
-    }
-
-
 }
