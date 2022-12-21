@@ -21,8 +21,6 @@ client.test("사용자 응답 완료", () => { client.assert(response.headers.va
 client.global.set("auth_token", response.headers.valueOf("Authorization"));
 %}
 
-
-
 ###
 GET http://localhost:8080/user
 Authorization: {{auth_token}}

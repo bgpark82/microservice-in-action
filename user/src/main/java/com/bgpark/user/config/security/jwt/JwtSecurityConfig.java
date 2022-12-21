@@ -26,15 +26,16 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // 인증
+        http.addFilter(new JwtAuthenticationFilter(authenticationManager()));
+        http.addFilterBefore(new JwtFilter(), BasicAuthenticationFilter.class);
+
+        // 인가
+        http.addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository));
         http.authorizeRequests()
                 .antMatchers("/h2-console/**","/users","/login").permitAll()
                 .antMatchers("/user").access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated();
-
-
-        http.addFilter(new JwtAuthenticationFilter(authenticationManager()));
-        http.addFilter(new JwtAuthorizationFilter(authenticationManager(), userRepository));
-        http.addFilterBefore(new JwtFilter(), BasicAuthenticationFilter.class);
     }
 
     @Bean

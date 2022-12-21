@@ -32,28 +32,32 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * @see PrincipalDetailsService#loadUserByUsername(String)
+     * 로그인 사용자를 인증
+     * 회원가입된 사용자와 로그인 정보를 비교하여 인증
+     * */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        log.info("authentication filter");
-        log.info(authenticationManager.toString());
+        log.info("jwt authentication filter");
 
-        // username, password
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            User user = mapper.readValue(request.getInputStream(), User.class);
-            log.info(user.toString());
-
+            User user = getUserFromBody(request);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+            log.info("authentication token before authentication, token={}", authenticationToken);
 
-            /** @see PrincipalDetailsService#loadUserByUsername(String) */
             Authentication authenticate = authenticationManager.authenticate(authenticationToken);
 
-            PrincipalDetail principal = (PrincipalDetail) authenticate.getPrincipal();
-            log.info(principal.getUsername());
+            log.info("authentication token after authentication, token={}", authenticate);
             return authenticate;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static User getUserFromBody(HttpServletRequest request) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(request.getInputStream(), User.class);
     }
 
     /**
@@ -62,7 +66,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
      */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        log.info("인증 성공!");
+        log.info("success authentication!");
 
         PrincipalDetail principal = (PrincipalDetail) authResult.getPrincipal();
 

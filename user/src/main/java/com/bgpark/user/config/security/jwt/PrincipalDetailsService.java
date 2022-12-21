@@ -23,9 +23,11 @@ public class PrincipalDetailsService implements UserDetailsService {
         log.info("사용자 검증..");
         Optional<User> user = userRepository.findByEmail(username);
         log.info("user={}", user);
-        if (user.isPresent()) {
-            return new PrincipalDetail(user.get());
+        if (!user.isPresent()) {
+            throw new UsernameNotFoundException("Can not find username");
         }
-        return null;
+        return new PrincipalDetail(user.get());
+//        return new org.springframework.security.core.userdetails.User(
+//                user.get().getEmail(), user.get().getPassword(), user.get().getRoles());
     }
 }

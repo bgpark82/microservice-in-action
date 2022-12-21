@@ -32,9 +32,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+        log.info("jwt authorization filter");
+
         String authorization = request.getHeader("Authorization");
-        log.info("authorization filter");
-        log.info("header={}", authorization);
+        log.info("authorization header={}", authorization);
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
             chain.doFilter(request, response);
@@ -42,29 +43,25 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
 
         String token = authorization.replace("Bearer ", "");
-
-        log.info("token={}", token);
+        log.info("authorization token={}", token);
 
         Long userId = JWT.require(Algorithm.HMAC512("secret"))
                 .build()
                 .verify(token)
                 .getClaim("id").asLong();
-
-        log.info("userId={}", userId);
+        log.info("requested userId={}", userId);
 
         if (userId != null) {
             Optional<User> savedUser = userRepository.findById(userId);
             if (savedUser.isPresent()) {
-                log.info("user={}", savedUser);
+                log.info("registered user={}", savedUser);
                 PrincipalDetail principal = new PrincipalDetail(savedUser.get());
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, null, principal.getAuthorities());
-                log.info("authentication={}", authentication);
+                log.info("jwt authentication token={}", authentication);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 chain.doFilter(request,response);
             }
         }
-
-        log.info("jwt 인가!");
     }
 }
