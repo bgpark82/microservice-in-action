@@ -2,5 +2,5 @@ package com.bgpark.notification.domain.slack;
 
 public interface SenderAdapter {
 
-    <T> void send(T body);
+    void send(String body, String url, String token);
 }

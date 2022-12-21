@@ -9,9 +9,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SlackSender {
 
+    private final SlackProperty property;
     private final SenderAdapter slackSenderAdapter;
 
-    public void send(SlackRequest request) {
-        slackSenderAdapter.send(request);
+    public void send(String body) {
+        slackSenderAdapter.send(body, property.getUrl(), property.getToken());
     }
 }
