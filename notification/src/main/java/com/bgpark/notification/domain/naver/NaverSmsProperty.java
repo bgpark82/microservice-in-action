@@ -15,4 +15,8 @@ public class NaverSmsProperty {
     private String path;
     private String serviceId;
     private String sender;
+
+    public String getSignaturePath() {
+        return path + "/services/" + serviceId + "/messages";
+    }
 }

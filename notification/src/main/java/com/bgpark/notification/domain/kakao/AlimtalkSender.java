@@ -1,6 +1,7 @@
 package com.bgpark.notification.domain.kakao;
 
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
+import com.bgpark.notification.domain.naver.cloud.NaverCloudConstant;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,21 +31,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AlimtalkSender {
 
-    private static final String X_NCP_APIGW_TIMESTAMP = "x-ncp-apigw-timestamp";
-    private static final String X_NCP_IAM_ACCESS_KEY = "x-ncp-iam-access-key";
-    private static final String X_NCP_APIGW_SIGNATURE_V2 = "x-ncp-apigw-signature-v2";
-
     private final NaverCloudClient cloudClient;
     private final NaverCloudProperty cloudProperty;
-    private final AlimktalkProperty property;
+    private final AlimktalkProperty alimktalkProperty;
 
     public void send() {
-        String timestamp = String.valueOf(Instant.now().toEpochMilli());
-        String signaturePath = property.getPath() + "/services/" + property.getServiceId() + "/messages";
-        String url = cloudProperty.getUrl() + signaturePath;
-        String accessKey = cloudProperty.getAccessKey();
-        String secretKey = cloudProperty.getSecretKey();
-        String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
+        final String timestamp = String.valueOf(Instant.now().toEpochMilli());
+        final String signaturePath = alimktalkProperty.getSignaturePath();
+        final String url = cloudProperty.getRequestUrl(signaturePath);
+        final String accessKey = cloudProperty.getAccessKey();
+        final String secretKey = cloudProperty.getSecretKey();
+        final String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
         send(url, timestamp, accessKey, signature);
     }
@@ -54,12 +51,11 @@ public class AlimtalkSender {
             CloseableHttpClient client = HttpClientBuilder.create().build();
             HttpPost request = new HttpPost(url);
             request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            request.addHeader(X_NCP_APIGW_TIMESTAMP, timestamp);
-            request.addHeader(X_NCP_IAM_ACCESS_KEY, accessKey);
-            request.addHeader(X_NCP_APIGW_SIGNATURE_V2, signature);
+            request.addHeader(NaverCloudConstant.X_NCP_APIGW_TIMESTAMP, timestamp);
+            request.addHeader(NaverCloudConstant.X_NCP_IAM_ACCESS_KEY, accessKey);
+            request.addHeader(NaverCloudConstant.X_NCP_APIGW_SIGNATURE_V2, signature);
             request.setEntity(new StringEntity(createBody(), StandardCharsets.UTF_8));
             CloseableHttpResponse response = client.execute(request);
-            log.info("request={}", request);
             log.info("response={}", EntityUtils.toString(response.getEntity()));
 
             if (response.getStatusLine().getStatusCode() != HttpStatus.SC_ACCEPTED) {

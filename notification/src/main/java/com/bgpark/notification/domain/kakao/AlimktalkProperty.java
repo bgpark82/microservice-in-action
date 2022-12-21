@@ -13,4 +13,8 @@ public class AlimktalkProperty {
 
     private String path;
     private String serviceId;
+
+    public String getSignaturePath() {
+        return path + "/services/" + serviceId + "/messages";
+    }
 }

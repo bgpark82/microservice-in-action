@@ -1,6 +1,7 @@
 package com.bgpark.notification.domain.naver;
 
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
+import com.bgpark.notification.domain.naver.cloud.NaverCloudConstant;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,18 +23,15 @@ import java.time.Instant;
 @Component
 @RequiredArgsConstructor
 public class NaverSender {
-    private static final String X_NCP_APIGW_TIMESTAMP = "x-ncp-apigw-timestamp";
-    private static final String X_NCP_IAM_ACCESS_KEY = "x-ncp-iam-access-key";
-    private static final String X_NCP_APIGW_SIGNATURE_V2 = "x-ncp-apigw-signature-v2";
 
     private final NaverCloudProperty cloudProperty;
-    private final NaverSmsProperty property;
     private final NaverCloudClient cloudClient;
+    private final NaverSmsProperty smsProperty;
 
     public void send() {
         final String timestamp = String.valueOf(Instant.now().toEpochMilli());
-        final String signaturePath = property.getPath() + "/services/" + property.getServiceId() + "/messages";
-        final String url = cloudProperty.getUrl() + signaturePath;
+        final String signaturePath = smsProperty.getSignaturePath();
+        final String url = cloudProperty.getRequestUrl(signaturePath);
         final String accessKey = cloudProperty.getAccessKey();
         final String secretKey = cloudProperty.getSecretKey();
         final String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
@@ -46,9 +44,9 @@ public class NaverSender {
             CloseableHttpClient client = HttpClientBuilder.create().build();
             HttpPost request = new HttpPost(url);
             request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            request.addHeader(X_NCP_APIGW_TIMESTAMP, timestamp);
-            request.addHeader(X_NCP_IAM_ACCESS_KEY, accessKey);
-            request.addHeader(X_NCP_APIGW_SIGNATURE_V2, signature);
+            request.addHeader(NaverCloudConstant.X_NCP_APIGW_TIMESTAMP, timestamp);
+            request.addHeader(NaverCloudConstant.X_NCP_IAM_ACCESS_KEY, accessKey);
+            request.addHeader(NaverCloudConstant.X_NCP_APIGW_SIGNATURE_V2, signature);
             request.setEntity(new StringEntity(createBody()));
             CloseableHttpResponse response = client.execute(request);
 

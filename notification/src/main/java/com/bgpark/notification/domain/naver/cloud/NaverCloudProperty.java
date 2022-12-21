@@ -14,6 +14,10 @@ public class NaverCloudProperty {
     private String url;
     private String accessKey;
     private String secretKey;
+
+    public String getRequestUrl(String path) {
+        return url + path;
+    }
 }
 
 
