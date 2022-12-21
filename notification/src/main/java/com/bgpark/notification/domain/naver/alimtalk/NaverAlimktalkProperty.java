@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Component
 @ConfigurationProperties("naver.alimtalk")
-public class AlimktalkProperty {
+public class NaverAlimktalkProperty {
 
     private String path;
     private String serviceId;

@@ -1,7 +1,7 @@
 package com.bgpark.notification.domain.kakao;
 
-import com.bgpark.notification.domain.naver.alimtalk.AlimtalkRequest;
-import com.bgpark.notification.domain.naver.alimtalk.AlimtalkSender;
+import com.bgpark.notification.domain.naver.alimtalk.NaverAlimtalkRequest;
+import com.bgpark.notification.domain.naver.alimtalk.NaverAlimtalkSender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -11,23 +11,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 
 @SpringBootTest
-class AlimtalkSenderTest {
+class NaverAlimtalkSenderTest {
 
     @Autowired
-    private AlimtalkSender alimtalkSender;
+    private NaverAlimtalkSender naverAlimtalkSender;
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
     void send() throws JsonProcessingException {
-        alimtalkSender.send(createBody());
+        naverAlimtalkSender.send(createBody());
     }
 
     private String createBody() throws JsonProcessingException {
-        AlimtalkRequest request = AlimtalkRequest.builder()
+        NaverAlimtalkRequest request = NaverAlimtalkRequest.builder()
                 .plusFriendId("@베이비페이스고객센터")
                 .templateCode("notiAffi02")
                 .messages(Arrays.asList(
-                        AlimtalkRequest.Message.builder()
+                        NaverAlimtalkRequest.Message.builder()
                                 .to("01045808682")
                                 .content("안녕하세요, 베이비페이스 입니다.\n" +
                                         "\n" +

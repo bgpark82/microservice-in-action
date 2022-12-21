@@ -13,16 +13,16 @@ import java.time.Instant;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AlimtalkSender {
+public class NaverAlimtalkSender {
 
     private final NaverClient naverAlimtalkClient;
     private final NaverCloudClient cloudClient;
     private final NaverCloudProperty cloudProperty;
-    private final AlimktalkProperty alimktalkProperty;
+    private final NaverAlimktalkProperty naverAlimktalkProperty;
 
     public void send(String body) {
         final String timestamp = String.valueOf(Instant.now().toEpochMilli());
-        final String signaturePath = alimktalkProperty.getSignaturePath();
+        final String signaturePath = naverAlimktalkProperty.getSignaturePath();
         final String url = cloudProperty.getRequestUrl(signaturePath);
         final String accessKey = cloudProperty.getAccessKey();
         final String secretKey = cloudProperty.getSecretKey();

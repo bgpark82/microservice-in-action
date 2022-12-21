@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlimtalkRequest {
+public class NaverAlimtalkRequest {
 
     private String plusFriendId;
     private String templateCode;
