@@ -1,0 +1,6 @@
+###
+GET https://sens.apigw.ntruss.com/alimtalk/v2/services/{serviceId}/channels
+
+x-ncp-apigw-timestamp: {Timestamp}
+x-ncp-iam-access-key: {Sub Account Access Key}
+x-ncp-apigw-signature-v2: {API Gateway Signature}

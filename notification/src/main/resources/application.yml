@@ -15,3 +15,13 @@ sms:
     timestamp-header: x-ncp-apigw-timestamp
     api-key-header: x-ncp-iam-access-key
     signature-header: x-ncp-apigw-signature-v2
+alimtalk:
+  naver:
+    url: https://sens.apigw.ntruss.com
+    path: /alimtalk/v2
+    service-id: ncp:kkobizmsg:kr:2528803:biz
+    api-key: h3wgv38IOOhcXNlrfljT
+    api-secret: AbivoGPePxmX0CySNvwmy84ov8N6moBeFSj6wyyw
+    timestamp-header: x-ncp-apigw-timestamp
+    api-key-header: x-ncp-iam-access-key
+    signature-header: x-ncp-apigw-signature-v2
