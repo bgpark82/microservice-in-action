@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -37,9 +38,9 @@ public class SlackSenderAdapter implements SenderAdapter {
             request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             request.setEntity(new StringEntity(convertToString(body)));
             CloseableHttpResponse response = client.execute(request);
-            log.info("request={}, response={}", request, response);
+            log.info("request={}, response={}", request, EntityUtils.toString(response.getEntity()));
 
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_ACCEPTED) {
+            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
                 throw new RuntimeException("slack notification send fail");
             }
         } catch (IOException e) {
