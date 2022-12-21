@@ -1,13 +1,11 @@
 package com.bgpark.notification.domain.naver;
 
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.StringUtils;
+import com.bgpark.notification.domain.naver.sms.NaverSender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.SQLOutput;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
