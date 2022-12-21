@@ -1,9 +1,9 @@
 package com.bgpark.notification.domain.naver;
 
-import com.bgpark.notification.util.Constant;
+import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
+import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -15,12 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 
 @Slf4j
@@ -31,17 +26,19 @@ public class NaverSender {
     private static final String X_NCP_IAM_ACCESS_KEY = "x-ncp-iam-access-key";
     private static final String X_NCP_APIGW_SIGNATURE_V2 = "x-ncp-apigw-signature-v2";
 
-    private final NaverProperty property;
+    private final NaverCloudProperty cloudProperty;
+    private final NaverSmsProperty property;
+    private final NaverCloudClient cloudClient;
 
     public void send() {
-        final String signaturePath = property.getPath() + "/services/" + property.getServiceId() + "/messages";
-        final String smsUrl = property.getUrl() + signaturePath;
         final String timestamp = String.valueOf(Instant.now().toEpochMilli());
-        final String accessKey = property.getApiKey();
-        final String secretKey = property.getApiSecret();
-        final String signature = createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
+        final String signaturePath = property.getPath() + "/services/" + property.getServiceId() + "/messages";
+        final String url = cloudProperty.getUrl() + signaturePath;
+        final String accessKey = cloudProperty.getAccessKey();
+        final String secretKey = cloudProperty.getSecretKey();
+        final String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
-        send(smsUrl, timestamp, accessKey, signature);
+        send(url, timestamp, accessKey, signature);
     }
 
     private void send(String url, String timestamp, String accessKey, String signature) {
@@ -82,33 +79,5 @@ public class NaverSender {
                 "}";
     }
 
-    public String createSignature(String path, String method, String timestamp, String accessKey, String secretKey) {
-        String message = createSignatureMessage(path, method, timestamp, accessKey);
-        byte[] rawHmac = createRawHmac(secretKey, message);
-        return Base64.encodeBase64String(rawHmac);
-    }
 
-    private byte[] createRawHmac(String secretKey, String message) {
-        try {
-            Mac mac = Mac.getInstance(Constant.HMAC_SHA256);
-            mac.init(new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), Constant.HMAC_SHA256));
-            return mac.doFinal(message.getBytes(StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeyException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String createSignatureMessage(String path, String method, String timestamp, String accessKey) {
-        return new StringBuilder()
-                .append(method)
-                .append(Constant.SPACE)
-                .append(path)
-                .append(Constant.NEW_LINE)
-                .append(timestamp)
-                .append(Constant.NEW_LINE)
-                .append(accessKey)
-                .toString();
-    }
 }

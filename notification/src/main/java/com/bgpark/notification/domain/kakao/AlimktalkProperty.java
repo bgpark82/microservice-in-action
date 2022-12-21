@@ -8,15 +8,9 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties("alimtalk.naver")
+@ConfigurationProperties("naver.alimtalk")
 public class AlimktalkProperty {
 
-    private String url;
     private String path;
     private String serviceId;
-    private String apiKey;
-    private String apiSecret;
-    private String timestampHeader;
-    private String apiKeyHeader;
-    private String signatureHeader;
 }

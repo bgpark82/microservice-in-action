@@ -9,16 +9,10 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties("sms.naver")
-public class NaverProperty {
+@ConfigurationProperties("naver.sms")
+public class NaverSmsProperty {
 
-    private String url;
     private String path;
     private String serviceId;
     private String sender;
-    private String apiKey;
-    private String apiSecret;
-    private String timestampHeader;
-    private String apiKeyHeader;
-    private String signatureHeader;
 }

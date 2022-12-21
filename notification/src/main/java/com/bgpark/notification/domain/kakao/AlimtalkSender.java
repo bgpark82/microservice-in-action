@@ -1,12 +1,12 @@
 package com.bgpark.notification.domain.kakao;
 
-import com.bgpark.notification.util.Constant;
+import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
+import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -19,12 +19,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
@@ -38,15 +34,17 @@ public class AlimtalkSender {
     private static final String X_NCP_IAM_ACCESS_KEY = "x-ncp-iam-access-key";
     private static final String X_NCP_APIGW_SIGNATURE_V2 = "x-ncp-apigw-signature-v2";
 
+    private final NaverCloudClient cloudClient;
+    private final NaverCloudProperty cloudProperty;
     private final AlimktalkProperty property;
 
     public void send() {
-        String accessKey = property.getApiKey();
-        String secretKey = property.getApiSecret();
-        String signaturePath = property.getPath() + "/services/" + property.getServiceId() + "/messages";
-        String url = property.getUrl() + signaturePath;
         String timestamp = String.valueOf(Instant.now().toEpochMilli());
-        String signature = createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
+        String signaturePath = property.getPath() + "/services/" + property.getServiceId() + "/messages";
+        String url = cloudProperty.getUrl() + signaturePath;
+        String accessKey = cloudProperty.getAccessKey();
+        String secretKey = cloudProperty.getSecretKey();
+        String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
         send(url, timestamp, accessKey, signature);
     }
@@ -94,55 +92,4 @@ public class AlimtalkSender {
                     "기타 문의가 있으신 경우 베이비페이스 고객센터로 문의주세요. 감사합니다.";
         }
     }
-
-
-    public String createSignature(String path, String method, String timestamp, String accessKey, String secretKey) {
-        String message = createSignatureMessage(path, method, timestamp, accessKey);
-        byte[] rawHmac = createRawHmac(secretKey, message);
-        return Base64.encodeBase64String(rawHmac);
-    }
-
-    private byte[] createRawHmac(String secretKey, String message) {
-        try {
-            Mac mac = Mac.getInstance(Constant.HMAC_SHA256);
-            mac.init(new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), Constant.HMAC_SHA256));
-            return mac.doFinal(message.getBytes(StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        } catch (InvalidKeyException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String createSignatureMessage(String path, String method, String timestamp, String accessKey) {
-        return new StringBuilder()
-                .append(method)
-                .append(Constant.SPACE)
-                .append(path)
-                .append(Constant.NEW_LINE)
-                .append(timestamp)
-                .append(Constant.NEW_LINE)
-                .append(accessKey)
-                .toString();
-    }
 }
-
-/**
- * POST https://sens.apigw.ntruss.com/alimtalk/v2/services/{serviceId}/messages
- *
- * Content-Type: application/json; charset=utf-8
- * x-ncp-apigw-timestamp: {Timestamp}
- * x-ncp-iam-access-key: {Sub Account Access Key}
- * x-ncp-apigw-signature-v2: {API Gateway Signature}
- *
- *
- *     url: https://sens.apigw.ntruss.com
- *     path: /sms/v2
- *     service-id: ncp:sms:kr:252880318896:bf_user_verify
- *     sender: 07043046482
- *     api-key: h3wgv38IOOhcXNlrfljT
- *     api-secret: AbivoGPePxmX0CySNvwmy84ov8N6moBeFSj6wyyw
- *     timestamp-header: x-ncp-apigw-timestamp
- *     api-key-header: x-ncp-iam-access-key
- *     signature-header: x-ncp-apigw-signature-v2
- */
