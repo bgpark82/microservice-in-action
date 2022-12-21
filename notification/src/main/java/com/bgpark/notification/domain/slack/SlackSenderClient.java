@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-public class SlackSenderAdapter implements SenderAdapter {
+public class SlackSenderClient implements SenderClient {
 
     public void send(String body, String url, String token) {
         verifyToken(token);
