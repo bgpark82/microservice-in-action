@@ -12,6 +12,7 @@ class SlackSenderTest {
 
     @Test
     void send() {
-        slackSender.send();
+        SlackRequest property = new SlackRequest("C04F5A5SPE2", "hi");
+        slackSender.send(property);
     }
 }

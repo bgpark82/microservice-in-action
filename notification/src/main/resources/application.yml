@@ -1,0 +1,17 @@
+
+slack:
+  chat:
+    url: https://slack.com/api/chat.postMessage
+    token: xoxb-4377016762647-4507457471415-WfDeiAWSkfH0NAF9jEH1FIFh
+
+sms:
+  naver:
+    url: https://sens.apigw.ntruss.com
+    path: /sms/v2
+    service-id: ncp:sms:kr:252880318896:bf_user_verify
+    sender: 07043046482
+    api-key: h3wgv38IOOhcXNlrfljT
+    api-secret: AbivoGPePxmX0CySNvwmy84ov8N6moBeFSj6wyyw
+    timestamp-header: x-ncp-apigw-timestamp
+    api-key-header: x-ncp-iam-access-key
+    signature-header: x-ncp-apigw-signature-v2
