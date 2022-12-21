@@ -1,4 +1,4 @@
-package com.bgpark.notification.domain.kakao;
+package com.bgpark.notification.domain.naver.alimtalk;
 
 import lombok.Getter;
 import lombok.Setter;

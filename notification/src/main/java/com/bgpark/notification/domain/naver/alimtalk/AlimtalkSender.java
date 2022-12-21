@@ -1,4 +1,4 @@
-package com.bgpark.notification.domain.kakao;
+package com.bgpark.notification.domain.naver.alimtalk;
 
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudConstant;
