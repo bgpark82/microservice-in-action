@@ -1,6 +1,7 @@
 package com.bgpark.notification.domain.naver.sms;
 
 import com.bgpark.notification.domain.naver.NaverClient;
+import com.bgpark.notification.domain.naver.NaverSignatureUtils;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ public class NaverSender {
 
     private final NaverClient naverSmsClient;
     private final NaverCloudProperty cloudProperty;
-    private final NaverCloudClient cloudClient;
     private final NaverSmsProperty smsProperty;
 
     public void send(String body) {
@@ -26,7 +26,7 @@ public class NaverSender {
         final String url = cloudProperty.getRequestUrl(signaturePath);
         final String accessKey = cloudProperty.getAccessKey();
         final String secretKey = cloudProperty.getSecretKey();
-        final String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
+        final String signature = NaverSignatureUtils.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
         naverSmsClient.send(url, timestamp, accessKey, signature, body);
     }

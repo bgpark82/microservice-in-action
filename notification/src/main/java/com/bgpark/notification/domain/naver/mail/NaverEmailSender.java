@@ -1,6 +1,7 @@
 package com.bgpark.notification.domain.naver.mail;
 
 import com.bgpark.notification.domain.naver.NaverClient;
+import com.bgpark.notification.domain.naver.NaverSignatureUtils;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import java.time.Instant;
 @RequiredArgsConstructor
 public class NaverEmailSender {
 
-    private final NaverCloudClient cloudClient;
     private final NaverCloudProperty cloudProperty;
     private final NaverEmailProperty emailProperty;
     private final NaverClient naverEmailClient;
@@ -26,7 +26,7 @@ public class NaverEmailSender {
         String url = emailProperty.getUrl() + signaturePath;
         String accessKey = cloudProperty.getAccessKey();
         String secretKey = cloudProperty.getSecretKey();
-        String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
+        String signature = NaverSignatureUtils.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
         naverEmailClient.send(timestamp, url, accessKey, signature, body);
     }
 }

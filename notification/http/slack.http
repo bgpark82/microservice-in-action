@@ -1,0 +1,8 @@
+###
+POST http://localhost:8080/slack
+Content-Type: application/json
+
+{
+  "channel" : "C04F5A5SPE2",
+  "text": "hi"
+}

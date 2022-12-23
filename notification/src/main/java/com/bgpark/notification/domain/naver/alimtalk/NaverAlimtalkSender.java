@@ -1,6 +1,7 @@
 package com.bgpark.notification.domain.naver.alimtalk;
 
 import com.bgpark.notification.domain.naver.NaverClient;
+import com.bgpark.notification.domain.naver.NaverSignatureUtils;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,6 @@ import java.time.Instant;
 public class NaverAlimtalkSender {
 
     private final NaverClient naverAlimtalkClient;
-    private final NaverCloudClient cloudClient;
     private final NaverCloudProperty cloudProperty;
     private final NaverAlimktalkProperty naverAlimktalkProperty;
 
@@ -26,7 +26,7 @@ public class NaverAlimtalkSender {
         final String url = cloudProperty.getRequestUrl(signaturePath);
         final String accessKey = cloudProperty.getAccessKey();
         final String secretKey = cloudProperty.getSecretKey();
-        final String signature = cloudClient.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
+        final String signature = NaverSignatureUtils.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
         naverAlimtalkClient.send(url, timestamp, accessKey, signature, body);
     }

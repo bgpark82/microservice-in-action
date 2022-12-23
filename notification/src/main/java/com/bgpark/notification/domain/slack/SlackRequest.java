@@ -1,8 +1,10 @@
 package com.bgpark.notification.domain.slack;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class SlackRequest {
 
     private String channel;
