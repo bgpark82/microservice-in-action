@@ -19,3 +19,6 @@ naver:
   alimtalk:
     path: /alimtalk/v2
     service-id: ncp:kkobizmsg:kr:2528803:biz
+  email:
+    url: https://mail.apigw.ntruss.com
+    path: /api/v1/mails
