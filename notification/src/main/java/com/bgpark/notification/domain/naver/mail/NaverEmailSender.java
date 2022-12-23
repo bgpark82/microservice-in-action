@@ -1,9 +1,8 @@
-package com.bgpark.notification.domain.naver.mail.application;
+package com.bgpark.notification.domain.naver.mail;
 
 import com.bgpark.notification.domain.naver.NaverClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
-import com.bgpark.notification.domain.naver.mail.infrastructure.NaverEmailProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;

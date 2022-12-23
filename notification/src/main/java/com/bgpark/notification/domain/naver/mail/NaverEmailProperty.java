@@ -1,4 +1,4 @@
-package com.bgpark.notification.domain.naver.mail.infrastructure;
+package com.bgpark.notification.domain.naver.mail;
 
 import lombok.Getter;
 import lombok.Setter;

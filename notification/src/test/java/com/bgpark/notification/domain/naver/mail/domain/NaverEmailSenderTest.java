@@ -1,7 +1,7 @@
 package com.bgpark.notification.domain.naver.mail.domain;
 
-import com.bgpark.notification.domain.naver.mail.application.NaverEmailSender;
-import com.bgpark.notification.domain.naver.mail.infrastructure.NaverEmailRequest;
+import com.bgpark.notification.domain.naver.mail.NaverEmailSender;
+import com.bgpark.notification.domain.naver.mail.NaverEmailRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

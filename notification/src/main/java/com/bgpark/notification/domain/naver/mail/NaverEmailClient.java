@@ -1,4 +1,4 @@
-package com.bgpark.notification.domain.naver.mail.infrastructure;
+package com.bgpark.notification.domain.naver.mail;
 
 import com.bgpark.notification.domain.naver.NaverClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudConstant;
