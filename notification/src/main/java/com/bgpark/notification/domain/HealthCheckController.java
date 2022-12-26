@@ -17,6 +17,7 @@ public class HealthCheckController {
                 + ", port(local.server.port)=" + env.getProperty("local.server.port")
                 + ", port(server.port)=" + env.getProperty("server.port")
                 + ", token secret=" + env.getProperty("token.secret")
-                + ", token expiration=" + env.getProperty("token.expiration_time"));
+                + ", token expiration=" + env.getProperty("token.expiration_time")
+                + ", slack token=" + env.getProperty("slack.chat.token"));
     }
 }

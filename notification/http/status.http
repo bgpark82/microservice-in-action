@@ -1,2 +1,9 @@
 ###
 GET http://localhost:8080/health_check
+
+###
+GET http://localhost:8080/actuator/health
+
+###
+POST http://localhost:8080/actuator/refresh
+

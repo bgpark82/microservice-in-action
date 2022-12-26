@@ -1,8 +1,8 @@
 
-slack:
-  chat:
-    url: https://slack.com/api/chat.postMessage
-    token: xoxb-4377016762647-4507457471415-WfDeiAWSkfH0NAF9jEH1FIFh
+#slack:
+#  chat:
+#    url: https://slack.com/api/chat.postMessage
+#    token: xoxb-4377016762647-4507457471415-WfDeiAWSkfH0NAF9jEH1FIFh
 
 naver:
   cloud:
@@ -22,3 +22,9 @@ naver:
   email:
     url: https://mail.apigw.ntruss.com
     path: /api/v1/mails
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans
