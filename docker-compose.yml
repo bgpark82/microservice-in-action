@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  notification:
+    container_name: notification
+    build: notification
+    image: bgpark82/notification
+    ports:
+      - "8080:8080"
+  
