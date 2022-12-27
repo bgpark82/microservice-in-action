@@ -7,3 +7,10 @@ GET http://localhost:8080/actuator/health
 ###
 POST http://localhost:8080/actuator/refresh
 
+###
+GET http://localhost:8080/status/error
+Content-Type: application/json
+
+{
+  "channel": "abc"
+}

@@ -1,13 +1,16 @@
 package com.bgpark.notification.domain;
 
+import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/status")
 @RequiredArgsConstructor
-public class HealthCheckController {
+public class StatusController {
 
     private final Environment env;
 
@@ -19,5 +22,14 @@ public class HealthCheckController {
                 + ", token secret=" + env.getProperty("token.secret")
                 + ", token expiration=" + env.getProperty("token.expiration_time")
                 + ", slack token=" + env.getProperty("slack.chat.token"));
+    }
+
+    @GetMapping("/error")
+    public void error() {
+        try {
+            throw new Exception("This is a test");
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
     }
 }
