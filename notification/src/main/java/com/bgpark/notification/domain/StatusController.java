@@ -1,5 +1,6 @@
 package com.bgpark.notification.domain;
 
+import io.micrometer.core.annotation.Timed;
 import io.sentry.Sentry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -15,6 +16,7 @@ public class StatusController {
     private final Environment env;
 
     @GetMapping("/health_check")
+    @Timed(value="status.health_check", longTask=true)
     public String status() {
         return String.format("it's working in notification service"
                 + ", port(local.server.port)=" + env.getProperty("local.server.port")

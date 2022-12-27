@@ -27,7 +27,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, busrefresh
+        include: refresh, health, beans, busrefresh, prometheus, metrics, info, httptrace
 spring:
   rabbitmq:
     host: 127.0.0.1
