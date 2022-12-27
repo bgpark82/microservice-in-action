@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8080/health_check
+GET http://localhost:8080/status/health_check
 
 ###
 GET http://localhost:8080/actuator/health
@@ -8,9 +8,8 @@ GET http://localhost:8080/actuator/health
 POST http://localhost:8080/actuator/refresh
 
 ###
-GET http://localhost:8080/status/error
-Content-Type: application/json
+POST http://localhost:8080/actuator/busrefresh
 
-{
-  "channel": "abc"
-}
+###
+GET http://localhost:8080/status/error
+
