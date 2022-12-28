@@ -2,14 +2,21 @@ version: '3.9'
 services:
   notification:
     container_name: notification
-    build: notification
+    build: notification/.
     image: bgpark82/notification
     ports:
       - "8080:8080"
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq:3.11-management
+#  rabbitmq:
+#    container_name: rabbitmq
+#    image: rabbitmq:3.11-management
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    volumes:
+      - /Users/bgpark/Desktop/alethio/babyface/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "9090:9090"
 

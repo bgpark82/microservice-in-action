@@ -1,8 +1,8 @@
 
-#slack:
-#  chat:
-#    url: https://slack.com/api/chat.postMessage
-#    token: xoxb-4377016762647-4507457471415-WfDeiAWSkfH0NAF9jEH1FIFh
+slack:
+  chat:
+    url: https://slack.com/api/chat.postMessage
+    token: xoxb-4377016762647-4507457471415-WfDeiAWSkfH0NAF9jEH1FIFh
 
 naver:
   cloud:
@@ -28,10 +28,10 @@ management:
     web:
       exposure:
         include: refresh, health, beans, busrefresh, prometheus, metrics, info, httptrace
-spring:
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
+#spring:
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
 
