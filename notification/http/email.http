@@ -1,0 +1,22 @@
+###
+POST http://localhost:8080/email
+Content-Type: application/json
+
+{
+  "senderAddress": "no_reply@company.com",
+  "title": "병길님 반갑습니다.",
+  "body": "귀하의 등급이 ${BEFORE_GRADE}에서 ${AFTER_GRADE}로 변경되었습니다.",
+  "recipients": [
+    {
+      "address": "popi7302@naver.com",
+      "name": "박병길",
+      "type": "R",
+      "parameters": {
+        "AFTER_GRADE": "GOLD",
+        "BEFORE_GRADE": "SILVER"
+      }
+    }
+  ],
+  "individual": true,
+  "advertising": false
+}

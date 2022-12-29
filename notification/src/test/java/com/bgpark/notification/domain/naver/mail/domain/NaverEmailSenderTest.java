@@ -43,6 +43,8 @@ class NaverEmailSenderTest {
                                 .parameters(paramMap)
                                 .build()
                 )).build();
-        return mapper.writeValueAsString(request);
+        String body = mapper.writeValueAsString(request);
+        System.out.println(body);
+        return body;
     }
 }
