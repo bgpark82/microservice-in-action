@@ -55,6 +55,8 @@ class NaverSenderTest {
                                 .content("안녕하세요!")
                                 .build()
                 )).build();
-        return mapper.writeValueAsString(request);
+        String body = mapper.writeValueAsString(request);
+        System.out.println(body);
+        return body;
     }
 }

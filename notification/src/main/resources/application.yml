@@ -46,6 +46,10 @@ spring:
             consumer:
               reset-offsets: true
               start-offset: earliest
+          sms_event_in:
+            consumer:
+              reset-offsets: true
+              start-offset: earliest
       bindings:
         slack_event_in:
           destination: slack_event
@@ -53,4 +57,11 @@ spring:
           group: notification
         slack_event_out:
           destination: slack_event
+          content-type: application/json
+        sms_event_in:
+          destination: sms_event
+          content-type: application/json
+          group: notification
+        sms_event_out:
+          destination: sms_event
           content-type: application/json

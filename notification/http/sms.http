@@ -1,0 +1,20 @@
+###
+POST http://localhost:8080/sms
+Content-Type: application/json
+
+{
+  "type": "SMS",
+  "contentType": "COMM",
+  "countryCode": 82,
+  "from": "07043046482",
+  "subject": "title",
+  "content": "hello",
+  "messages": [
+    {
+      "to": "01045808682",
+      "subject": "[베이비페이스]",
+      "content": "안녕하세요!"
+    }
+  ]
+}
+

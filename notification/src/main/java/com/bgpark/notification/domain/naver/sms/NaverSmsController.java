@@ -1,5 +1,6 @@
-package com.bgpark.notification.domain.slack;
+package com.bgpark.notification.domain.naver.sms;
 
+import com.bgpark.notification.domain.slack.KafkaEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class SlackSendController {
+public class NaverSmsController {
 
-    private final SlackEvent slackEvent;
+    private final SmsEvent smsEvent;
 
-    @PostMapping("/slack")
-    public ResponseEntity create(@RequestBody SlackRequest request) {
-        slackEvent.slackOut().send(KafkaEvent.message(request));
+    @PostMapping("/sms")
+    public ResponseEntity create(@RequestBody NaverSmsRequest request) {
+        smsEvent.smsOutput().send(KafkaEvent.message(request));
         return ResponseEntity.ok().build();
     }
 }
