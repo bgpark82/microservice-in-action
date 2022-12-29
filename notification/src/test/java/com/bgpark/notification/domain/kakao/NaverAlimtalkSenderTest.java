@@ -37,7 +37,9 @@ class NaverAlimtalkSenderTest {
                                         "기타 문의가 있으신 경우 베이비페이스 고객센터로 문의주세요. 감사합니다.")
                                 .build()
                 )).build();
-        return mapper.writeValueAsString(request);
+        String body = mapper.writeValueAsString(request);
+        System.out.println(body);
+        return body;
     }
 
 }

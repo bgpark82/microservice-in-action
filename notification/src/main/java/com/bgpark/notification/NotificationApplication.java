@@ -1,5 +1,6 @@
 package com.bgpark.notification;
 
+import com.bgpark.notification.domain.naver.alimtalk.AlimtalkEvent;
 import com.bgpark.notification.domain.naver.mail.EmailEvent;
 import com.bgpark.notification.domain.naver.sms.SmsEvent;
 import com.bgpark.notification.domain.slack.SlackEvent;
@@ -10,7 +11,8 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 @EnableBinding({
 		SlackEvent.class,
 		SmsEvent.class,
-		EmailEvent.class
+		EmailEvent.class,
+		AlimtalkEvent.class
 })
 @SpringBootApplication
 public class NotificationApplication  {

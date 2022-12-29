@@ -1,0 +1,14 @@
+###
+POST http://localhost:8080/alimtalk
+Content-Type: application/json
+
+{
+  "plusFriendId": "@베이비페이스고객센터",
+  "templateCode": "notiAffi02",
+  "messages": [
+    {
+      "to": "01045808682",
+      "content": "안녕하세요, 베이비페이스 입니다.\n\n고객님께서 전송하신 상품권으로 인해,\n현재 남아있는 베이비페이스 상품권 잔여 개수는 [1개] 입니다.\n\n기타 문의가 있으신 경우 베이비페이스 고객센터로 문의주세요. 감사합니다."
+    }
+  ]
+}

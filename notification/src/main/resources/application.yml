@@ -54,6 +54,10 @@ spring:
             consumer:
               reset-offsets: true
               start-offset: earliest
+          alimtalk_event_in:
+            consumer:
+              reset-offsets: true
+              start-offset: earliest
       bindings:
         slack_event_in:
           destination: slack_event
@@ -75,4 +79,11 @@ spring:
           group: notification
         email_event_out:
           destination: email_event
+          content-type: application/json
+        alimtalk_event_in:
+          destination: alimtalk_event
+          content-type: application/json
+          group: notification
+        alimtalk_event_out:
+          destination: alimtalk_event
           content-type: application/json

@@ -4,6 +4,7 @@ import com.bgpark.notification.domain.naver.NaverClient;
 import com.bgpark.notification.domain.naver.NaverSignatureUtils;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudClient;
 import com.bgpark.notification.domain.naver.cloud.NaverCloudProperty;
+import com.bgpark.notification.util.CustomObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,7 @@ public class NaverAlimtalkSender {
     private final NaverClient naverAlimtalkClient;
     private final NaverCloudProperty cloudProperty;
     private final NaverAlimktalkProperty naverAlimktalkProperty;
+    private final CustomObjectMapper objectMapper;
 
     public void send(String body) {
         final String timestamp = String.valueOf(Instant.now().toEpochMilli());
@@ -29,5 +31,10 @@ public class NaverAlimtalkSender {
         final String signature = NaverSignatureUtils.createSignature(signaturePath, HttpMethod.POST.name(), timestamp, accessKey, secretKey);
 
         naverAlimtalkClient.send(url, timestamp, accessKey, signature, body);
+    }
+
+    public void send(NaverAlimtalkRequest request) {
+        String body = objectMapper.writeValueAsString(request);
+        send(body);
     }
 }
