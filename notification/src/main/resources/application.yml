@@ -2,7 +2,7 @@
 slack:
   chat:
     url: https://slack.com/api/chat.postMessage
-    token: xoxb-4377016762647-4507457471415-WfDeiAWSkfH0NAF9jEH1FIFh
+    token: xoxb-4377016762647-4507457471415-0mo09liS4SDkI71qURokIqvp
 
 naver:
   cloud:
@@ -28,10 +28,29 @@ management:
     web:
       exposure:
         include: refresh, health, beans, busrefresh, prometheus, metrics, info, httptrace
+
 #spring:
 #  rabbitmq:
 #    host: 127.0.0.1
 #    port: 5672
 #    username: guest
 #    password: guest
-
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 49.50.164.81:9092
+        bindings:
+          slack_event_in:
+            consumer:
+              reset-offsets: true
+              start-offset: earliest
+      bindings:
+        slack_event_in:
+          destination: slack_event
+          content-type: application/json
+          group: notification
+        slack_event_out:
+          destination: slack_event
+          content-type: application/json

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SlackSendController {
 
-    private final SlackSender slackSender;
+    private final SlackEvent slackEvent;
 
     @PostMapping("/slack")
     public ResponseEntity create(@RequestBody SlackRequest request) {
-        slackSender.send(request);
+        slackEvent.slackOut().send(SlackEvent.message(request));
         return ResponseEntity.ok().build();
     }
 }
