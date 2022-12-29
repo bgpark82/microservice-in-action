@@ -45,19 +45,19 @@ spring:
           slack_event_in:
             consumer:
               reset-offsets: true
-              start-offset: earliest
+              start-offset: latest
           sms_event_in:
             consumer:
               reset-offsets: true
-              start-offset: earliest
+              start-offset: latest
           email_event_in:
             consumer:
               reset-offsets: true
-              start-offset: earliest
+              start-offset: latest
           alimtalk_event_in:
             consumer:
               reset-offsets: true
-              start-offset: earliest
+              start-offset: latest
       bindings:
         slack_event_in:
           destination: slack_event
@@ -87,3 +87,7 @@ spring:
         alimtalk_event_out:
           destination: alimtalk_event
           content-type: application/json
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

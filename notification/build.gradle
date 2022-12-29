@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.6'
+	id 'org.springframework.boot' version '2.6.7'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
@@ -30,6 +30,8 @@ dependencies {
 //	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
 //	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 //	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+	implementation "io.springfox:springfox-boot-starter:3.0.0"
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
 	implementation 'io.sentry:sentry-spring-boot-starter:6.10.0'
 	implementation 'org.apache.httpcomponents:httpclient:4.5.14'
