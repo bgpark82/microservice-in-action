@@ -5,7 +5,12 @@ Content-Type: application/json
 {
   "name": "베이비페이스",
   "price": 33000,
-  "amount": 100
+  "amount": 100,
+  "groups": [
+    {
+      "name": "필수옵션"
+    }
+  ]
 }
 
 ### 모든 아이템을 조회한다

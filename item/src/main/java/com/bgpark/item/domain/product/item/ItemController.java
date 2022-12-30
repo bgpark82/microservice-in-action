@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,14 +17,16 @@ public class ItemController {
     private final ItemRepository itemRepository;
 
     @PostMapping("/items")
-    public ResponseEntity create(@RequestBody Item request) {
-        Item savedItem = itemRepository.save(request);
-        return ResponseEntity.ok(savedItem);
+    public ResponseEntity<ItemCreateDto> create(@RequestBody ItemCreateDto request) {
+        Item savedItem = itemRepository.save(request.toItem());
+        return ResponseEntity.ok(ItemCreateDto.create(savedItem));
     }
 
     @GetMapping("/items")
-    public ResponseEntity findAll() {
+    public ResponseEntity<List<ItemCreateDto>> findAll() {
         List<Item> items = itemRepository.findAll();
-        return ResponseEntity.ok(items);
+        return ResponseEntity.ok(items.stream()
+                .map(item -> ItemCreateDto.create(item))
+                .collect(Collectors.toList()));
     }
 }

@@ -5,10 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -26,4 +25,15 @@ public class Item {
     private int price;
 
     private int amount;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<OptionGroup> groups = new ArrayList<>();
+
+    public void addGroup(List<OptionGroup> groups) {
+        if (this.groups == null) {
+            this.groups = new ArrayList<>();
+        }
+        this.groups.addAll(groups);
+        groups.forEach(group -> group.addItem(this));
+    }
 }
