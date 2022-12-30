@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import {Link} from "react-router-dom";
 
 function Login() {
 
@@ -30,6 +31,7 @@ function Login() {
 
     return (
         <div className="App">
+            <Link to="/item">아이템 등록</Link>
             <button onClick={onKakaoLogin}>카카오 로그인</button>
             <div id="naverIdLogin" />
             <input placeholder="id"/>

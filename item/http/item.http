@@ -8,7 +8,29 @@ Content-Type: application/json
   "amount": 100,
   "groups": [
     {
-      "name": "필수옵션"
+      "name": "필수옵션",
+      "option": [
+        {
+          "name": "일반분석",
+          "price": 0,
+          "amount": 100
+        }
+      ]
+    },
+    {
+      "name": "선택옵션",
+      "option": [
+        {
+          "name": "디데이 캘린더",
+          "price": 18000,
+          "amount": 100
+        },
+        {
+          "name": "포토 스탠드",
+          "price": 12000,
+          "amount": 100
+        }
+      ]
     }
   ]
 }
