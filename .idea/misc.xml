@@ -6,7 +6,9 @@
     <file type="web" url="file://$PROJECT_DIR$/config" />
     <file type="web" url="file://$PROJECT_DIR$/eureka" />
     <file type="web" url="file://$PROJECT_DIR$/gateway" />
+    <file type="web" url="file://$PROJECT_DIR$/item" />
     <file type="web" url="file://$PROJECT_DIR$/notification" />
+    <file type="web" url="file://$PROJECT_DIR$/order" />
     <file type="web" url="file://$PROJECT_DIR$/payment" />
     <file type="web" url="file://$PROJECT_DIR$/user" />
   </component>
