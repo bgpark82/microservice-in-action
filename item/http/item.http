@@ -1,0 +1,12 @@
+### 아이템을 등록한다
+POST http://localhost:8080/items
+Content-Type: application/json
+
+{
+  "name": "베이비페이스",
+  "price": 33000,
+  "amount": 100
+}
+
+### 모든 아이템을 조회한다
+GET http://localhost:8080/items

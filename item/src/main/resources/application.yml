@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/h2/2.1.214/db/test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      format-sql: true
+  h2:
+    console:
+      enabled: true
+logging:
+  level:
+    org:
+      hibernate:
+        type.descriptor.sql: TRACE
+        resource.transaction: DEBUG
+        SQL: DEBUG
+      springframework:
+        transaction.interceptor: TRACE
+        jdbc.datasource.DataSourceTransactionManager: DEBUG
+        orm.jpa.JpaTransactionManager: DEBUG
