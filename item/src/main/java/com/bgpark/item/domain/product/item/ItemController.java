@@ -1,5 +1,6 @@
 package com.bgpark.item.domain.product.item;
 
+import com.bgpark.item.domain.product.item.dto.ItemCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class ItemController {
 
     @PostMapping("/items")
     public ResponseEntity<ItemCreateDto> create(@RequestBody ItemCreateDto request) {
-        Item savedItem = itemRepository.save(request.toItem());
+        Item savedItem = itemRepository.save(convertItem(request));
         return ResponseEntity.ok(ItemCreateDto.create(savedItem));
     }
 
@@ -28,5 +29,22 @@ public class ItemController {
         return ResponseEntity.ok(items.stream()
                 .map(item -> ItemCreateDto.create(item))
                 .collect(Collectors.toList()));
+    }
+
+    private Item convertItem(ItemCreateDto request) {
+        List<OptionGroup> groups = request.getGroups().stream()
+                .map(group -> {
+                    List<Option> options = group.getOptions().stream()
+                            .map(option -> Option.create(option.getName(), option.getPrice(), option.getAmount()))
+                            .collect(Collectors.toList());
+
+                    OptionGroup optionGroup = OptionGroup.create(group.getName());
+
+                    optionGroup.addOptions(options);
+                    return optionGroup;
+                }).collect(Collectors.toList());
+        Item item = Item.create(request.getName(), request.getPrice(), request.getAmount());
+        item.addGroup(groups);
+        return item;
     }
 }

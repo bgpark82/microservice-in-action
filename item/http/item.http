@@ -9,7 +9,7 @@ Content-Type: application/json
   "groups": [
     {
       "name": "필수옵션",
-      "option": [
+      "options": [
         {
           "name": "일반분석",
           "price": 0,
@@ -19,7 +19,7 @@ Content-Type: application/json
     },
     {
       "name": "선택옵션",
-      "option": [
+      "options": [
         {
           "name": "디데이 캘린더",
           "price": 18000,

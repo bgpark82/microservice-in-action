@@ -1,5 +1,6 @@
-package com.bgpark.item.domain.product.item;
+package com.bgpark.item.domain.product.item.dto;
 
+import com.bgpark.item.domain.product.item.Item;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Getter
@@ -23,6 +23,8 @@ public class ItemCreateDto {
     private int price;
 
     private int amount;
+
+    private List<OptionGroupCreateDto> groups = new ArrayList<>();
 
     public static ItemCreateDto create(Item item) {
         return ItemCreateDto.builder()

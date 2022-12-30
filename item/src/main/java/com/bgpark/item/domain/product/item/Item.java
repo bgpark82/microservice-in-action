@@ -26,8 +26,16 @@ public class Item {
 
     private int amount;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "item")
     private List<OptionGroup> groups = new ArrayList<>();
+
+    public static Item create(String name, int price, int amount) {
+        Item item = new Item();
+        item.name = name;
+        item.price = price;
+        item.amount = amount;
+        return item;
+    }
 
     public void addGroup(List<OptionGroup> groups) {
         if (this.groups == null) {
