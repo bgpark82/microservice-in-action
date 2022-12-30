@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -27,19 +28,24 @@ public class ItemCreateDto {
     private List<OptionGroupCreateDto> groups = new ArrayList<>();
 
     public static ItemCreateDto create(Item item) {
+        List<OptionGroupCreateDto> groups = item.getGroups().stream()
+                .map(group -> OptionGroupCreateDto.builder()
+                            .name(group.getName())
+                            .options(group.getOptions().stream()
+                                    .map(option -> OptionCreateDto.builder()
+                                            .name(option.getName())
+                                            .price(option.getPrice())
+                                            .amount(option.getAmount())
+                                            .build())
+                                    .collect(Collectors.toList()))
+                            .build()
+                ).collect(Collectors.toList());
         return ItemCreateDto.builder()
                 .id(item.getId())
                 .name(item.getName())
                 .amount(item.getAmount())
                 .price(item.getPrice())
-                .build();
-    }
-
-    public Item toItem() {
-        return Item.builder()
-                .name(name)
-                .price(price)
-                .amount(amount)
+                .groups(groups)
                 .build();
     }
 }
