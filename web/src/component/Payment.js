@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import axios from "axios";
 
 function Payment() {
 
@@ -52,14 +53,19 @@ function Payment() {
         });
     }
 
-    useEffect(() => {
-
-    },[])
+    const onStripePayment = async () => {
+        const formData = new FormData();
+        const res = await axios.post("http://localhost:8080/create-checkout-session", formData)
+        if (res.status == 200) {
+            window.location = res.data
+        }
+    }
 
     return (
         <div>
             <button onClick={onKGPayment}>KG이니시스</button>
             <button onClick={onKakaoPayment}>카카오페이</button>
+            <button onClick={onStripePayment}>Stripe</button>
         </div>
     )
 }
