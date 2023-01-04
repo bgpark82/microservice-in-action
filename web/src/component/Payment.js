@@ -57,6 +57,7 @@ function Payment() {
         const formData = new FormData();
         const res = await axios.post("http://localhost:8080/create-checkout-session", formData)
         if (res.status == 200) {
+            console.log(res.data)
             window.location = res.data
         }
     }
