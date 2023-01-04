@@ -7,11 +7,27 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
 spring:
   application:
-    name: gateway
+    name: gateway-service
+
   cloud:
     gateway:
+      # https://velog.io/@mdy0102/Spring-Cloud-Gateway-CORS-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - POST
+              - GET
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+
       default-filters:
         - name: GlobalFilter
           args:
@@ -33,7 +49,3 @@ spring:
                 postLogger: true
 #            - AddRequestHeader=user-request, first-request-header2
 #            - AddResponseHeader=user-response, first-response-header2
-        - id: second-service
-          uri: http://localhost:8082
-          predicates:
-            - Path=/second-service/**
