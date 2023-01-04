@@ -7,9 +7,11 @@ import com.stripe.param.checkout.SessionCreateParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
+@RequestMapping("/payment-service")
 @RestController
 public class StripeController {
 
@@ -28,6 +30,7 @@ public class StripeController {
 
         try {
             Session session = Session.create(params);
+            log.info("stripe url={}", session.getUrl());
             return ResponseEntity.ok(session.getUrl());
         } catch (StripeException e) {
             throw new RuntimeException(e);

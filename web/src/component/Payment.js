@@ -1,7 +1,8 @@
-import {useEffect} from "react";
 import axios from "axios";
 
 function Payment() {
+
+    const PAYMENT_SERVICE_URL = "http://localhost:8000/payment-service/create-checkout-session";
 
     const onKGPayment = () => {
         const IMP = window.IMP
@@ -55,7 +56,7 @@ function Payment() {
 
     const onStripePayment = async () => {
         const formData = new FormData();
-        const res = await axios.post("http://localhost:8080/create-checkout-session", formData)
+        const res = await axios.post(PAYMENT_SERVICE_URL, formData)
         if (res.status == 200) {
             console.log(res.data)
             window.location = res.data

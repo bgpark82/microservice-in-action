@@ -42,6 +42,10 @@ spring:
           filters:
             - AddRequestHeader=item-request, item-request-header
             - AddResponseHeader=item-response, item-response-header
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment-service/**
 #        - id: user-service
 #          uri: http://localhost:8081
 #          uri: lb://user-service
