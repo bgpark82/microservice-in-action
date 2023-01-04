@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 
 const Items = () => {
+    const ITEM_SERVICE_URL = 'http://localhost:8000/item-service/items';
 
     const [items, setItems] = useState([])
     const [item, setItem] = useState({
@@ -20,13 +21,13 @@ const Items = () => {
     }
 
     const onCreateItem = async () => {
-        await axios.post('http://localhost:8080/items', item);
+        await axios.post(ITEM_SERVICE_URL, item);
         const res = await getItems();
         setItems(res.data)
     }
 
     const getItems =  () => {
-        return axios.get('http://localhost:8080/items');
+        return axios.get(ITEM_SERVICE_URL);
     }
 
     useEffect(() => {

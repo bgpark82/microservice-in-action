@@ -11,10 +11,10 @@ public class FilterConfig {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r -> r.path("/user/**")
-                        .filters(f -> f.addRequestHeader("user-request","first-user-request")
-                                        .addResponseHeader("user-response","first-user-response"))
-                        .uri("http://localhost:8081")
+                .route(r -> r.path("/item-service/**")
+                    .filters(f -> f.addRequestHeader("item-request","item-request-header")
+                                    .addResponseHeader("item-response","item-response-header"))
+                    .uri("http://localhost:8081")
                 ).build();
     }
 

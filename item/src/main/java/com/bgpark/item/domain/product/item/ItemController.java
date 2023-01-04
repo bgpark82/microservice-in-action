@@ -2,23 +2,24 @@ package com.bgpark.item.domain.product.item;
 
 import com.bgpark.item.domain.product.item.dto.ItemCreateDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
+@RequestMapping("/item-service")
 @RequiredArgsConstructor
 public class ItemController {
 
     private final ItemRepository itemRepository;
 
     @PostMapping("/items")
-    public ResponseEntity<ItemCreateDto> create(@RequestBody ItemCreateDto request) {
+    public ResponseEntity<ItemCreateDto> create(@RequestBody ItemCreateDto request, @RequestHeader(value = "item-request", required = false) String itemHeader) {
+        log.info("item header=" + itemHeader);
         Item savedItem = itemRepository.save(convertItem(request));
         return ResponseEntity.ok(ItemCreateDto.create(savedItem));
     }
