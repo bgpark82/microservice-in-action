@@ -37,7 +37,7 @@ class OrderControllerTest {
 
     @Test
     void create() throws Exception {
-        given(itemClient.order(any())).willReturn(orderItemsDto());
+        given(itemClient.order(any(), any())).willReturn(orderItemDto());
 
         MockHttpServletResponse response = mvc.perform(
                     post("/order-service/orders")
@@ -50,35 +50,29 @@ class OrderControllerTest {
         assertThat(response.getStatus()).isEqualTo(200);
     }
 
-    private OrderItemsDto orderItemsDto() {
+    private OrderItemDto orderItemDto() {
         OrderItemDto.OrderOptionDto option = OrderItemDto.OrderOptionDto.builder()
                 .optionPrice(16_900)
                 .optionName("d-day calendar")
                 .optionAmount(1)
                 .build();
 
-        OrderItemDto item = OrderItemDto.builder()
+        return OrderItemDto.builder()
                 .itemId(1L)
                 .itemName("babyface")
                 .itemPrice(36_000)
                 .itemAmount(1)
                 .options(Arrays.asList(option))
                 .build();
-
-        return OrderItemsDto.builder()
-                .items(Arrays.asList(item))
-                .build();
     }
 
     private OrderCreateDto orderCreateDto() {
         return OrderCreateDto.builder()
-                .items(Arrays.asList(OrderCreateDto.OrderCreateItemDto.builder()
-                        .itemId(1L)
-                        .itemAmount(1)
-                        .options(Arrays.asList(OrderCreateDto.OrderCreateOptionDto.builder()
-                                .optionId(1L)
-                                .OptionAmount(2)
-                                .build()))
+                .itemId(1L)
+                .itemAmount(1)
+                .options(Arrays.asList(OrderCreateDto.OrderCreateOptionDto.builder()
+                        .optionId(1L)
+                        .OptionAmount(2)
                         .build()))
                 .build();
     }

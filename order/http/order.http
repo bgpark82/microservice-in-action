@@ -1,0 +1,14 @@
+###
+POST http://localhost:8080/order-service/orders
+Content-Type: application/json
+
+{
+  "itemId": 1,
+  "itemAmount": 1,
+  "options": [
+    {
+      "optionId": 1,
+      "optionAmount": 2
+    }
+  ]
+}

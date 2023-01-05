@@ -10,17 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderCreateDto {
 
-    private List<OrderCreateItemDto> items;
-
-    @Getter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    static class OrderCreateItemDto {
-        private Long itemId;
-        private int itemAmount;
-        private List<OrderCreateOptionDto> options;
-    }
+    private Long itemId;
+    private int itemAmount;
+    private List<OrderCreateOptionDto> options;
 
     @Getter
     @Builder

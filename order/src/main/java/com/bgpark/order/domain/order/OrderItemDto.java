@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -30,4 +31,18 @@ public class OrderItemDto {
         private int optionAmount;
     }
 
+    public OrderItem toOrderItem() {
+        return OrderItem.builder()
+                .name(itemName)
+                .price(itemPrice)
+                .amount(itemAmount)
+                .options(options.stream()
+                        .map(option -> OrderOption.builder()
+                                .name(option.getOptionName())
+                                .price(option.getOptionPrice())
+                                .amount(option.getOptionAmount())
+                                .build())
+                        .collect(Collectors.toList()))
+                .build();
+    }
 }
