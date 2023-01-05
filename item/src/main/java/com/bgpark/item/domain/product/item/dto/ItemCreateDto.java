@@ -30,9 +30,11 @@ public class ItemCreateDto {
     public static ItemCreateDto create(Item item) {
         List<OptionGroupCreateDto> groups = item.getGroups().stream()
                 .map(group -> OptionGroupCreateDto.builder()
+                            .id(group.getId())
                             .name(group.getName())
                             .options(group.getOptions().stream()
                                     .map(option -> OptionCreateDto.builder()
+                                            .id(option.getId())
                                             .name(option.getName())
                                             .price(option.getPrice())
                                             .amount(option.getAmount())

@@ -33,6 +33,7 @@ const Items = () => {
     useEffect(() => {
         const init = async () => {
             const res = await getItems();
+            console.log(res.data)
             setItems(res.data)
         }
         init();
@@ -48,16 +49,19 @@ const Items = () => {
                 <table>
                     <tbody>
                 {items && items.map(item => (
-                            <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.price}</td>
-                                <td>{item.amount}</td>
-                                <td>
-                                    <Link to={`/items/${item.id}`}>
-                                        <button>옵션 추가</button>
-                                    </Link>
-                                </td>
-                            </tr>
+                            <div>
+                                <div>{item.name} {item.price}</div>
+                                {item.groups.map(group => (
+                                    <div>
+                                        <div>{group.name}</div>
+                                        <select>
+                                            {group.options.map(o => (
+                                                <option>{o.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                ))}
+                            </div>
                     ))}
                     </tbody>
                 </table>

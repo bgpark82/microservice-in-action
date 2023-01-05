@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OptionGroupCreateDto {
 
+    private Long id;
     private String name;
     private List<OptionCreateDto> options = new ArrayList<>();
 }

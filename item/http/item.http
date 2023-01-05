@@ -1,5 +1,5 @@
 ### 아이템을 등록한다
-POST http://localhost:8080/items
+POST http://localhost:8000/item-service/items
 Content-Type: application/json
 
 {
@@ -14,6 +14,11 @@ Content-Type: application/json
           "name": "일반분석",
           "price": 0,
           "amount": 100
+        },
+        {
+          "name": "빠른분석",
+          "price": 4500,
+          "amount": 100
         }
       ]
     },
@@ -22,12 +27,12 @@ Content-Type: application/json
       "options": [
         {
           "name": "디데이 캘린더",
-          "price": 18000,
+          "price": 16900,
           "amount": 100
         },
         {
           "name": "포토 스탠드",
-          "price": 12000,
+          "price": 11900,
           "amount": 100
         }
       ]
@@ -36,4 +41,4 @@ Content-Type: application/json
 }
 
 ### 모든 아이템을 조회한다
-GET http://localhost:8080/items
+GET http://localhost:8000/item-service/items
