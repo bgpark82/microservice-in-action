@@ -1,5 +1,5 @@
 ###
-POST http://localhost:8080/order-service/orders
+POST http://localhost:8000/order-service/orders
 Content-Type: application/json
 
 {

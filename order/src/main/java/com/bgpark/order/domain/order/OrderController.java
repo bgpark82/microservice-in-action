@@ -17,7 +17,7 @@ public class OrderController {
 
     @PostMapping("/orders")
     public ResponseEntity<Order> create(@RequestBody OrderCreateDto request) {
-        final OrderItemDto itemsDto = itemClient.order(request.getItemId(), request);
+        final OrderItemDto itemsDto = itemClient.order(request.getItemId());
         final OrderItem orderItems = itemsDto.toOrderItem();
         final int price = orderItems.calculatePrice();
 

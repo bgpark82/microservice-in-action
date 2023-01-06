@@ -32,6 +32,14 @@ public class ItemController {
                 .collect(Collectors.toList()));
     }
 
+    @GetMapping("/items/{itemId}")
+    public ResponseEntity<ItemSearchDto> findByItemId(@PathVariable Long itemId) {
+        ItemSearchDto response = itemRepository.findById(itemId)
+                .map(ItemSearchDto::of)
+                .orElse(null);
+        return ResponseEntity.ok(response);
+    }
+
     private Item convertItem(ItemCreateDto request) {
         List<OptionGroup> groups = request.getGroups().stream()
                 .map(group -> {
